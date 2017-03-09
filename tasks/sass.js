@@ -6,13 +6,15 @@ var postcss = require('gulp-postcss')
 var cssnano = require('cssnano')
 var autoprefixer = require('autoprefixer')
 
+
 var browserSync = require('../utils/browsersync')
 
 module.exports = function(config) {
   gulp.task('sass', function () {
     var sassOptions = {
-      outputStyle: 'compressed'
-    }
+    outputStyle: 'compressed',
+    includePaths: config.sassIncludePaths ? config.sassIncludePaths : []
+  }
 
     return gulp.src(path.join(config.assetsPath, config.sassPath))
       .pipe(sourcemaps.init())

@@ -10,7 +10,8 @@ module.exports = function(config) {
     gulp.watch('gulp/**/*.js', ['standardjs'])
 
     browserSync.init({
-      proxy: config.localhost
+      proxy: config.localhost,
+      open: false
     })
 
     console.log('Watching...')
