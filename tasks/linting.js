@@ -1,9 +1,8 @@
-var gulp = require('gulp')
 var path = require('path')
 var standard = require('gulp-standard')
 var sassLint = require('gulp-sass-lint')
 
-module.exports = function(config) {
+module.exports = function(gulp, config) {
   gulp.task('standardjs', function () {
     var jsFiles = [
       path.join(config.assetsPath, '**/src/*.js'),

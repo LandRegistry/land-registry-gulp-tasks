@@ -1,5 +1,4 @@
 var path = require('path')
-var gulp = require('gulp')
 var sourcemaps = require('gulp-sourcemaps')
 var sass = require('gulp-sass')
 var postcss = require('gulp-postcss')
@@ -9,7 +8,7 @@ var autoprefixer = require('autoprefixer')
 
 var browserSync = require('../utils/browsersync')
 
-module.exports = function(config) {
+module.exports = function(gulp, config) {
   gulp.task('sass', function () {
     var sassOptions = {
     outputStyle: 'compressed',

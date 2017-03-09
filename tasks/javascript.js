@@ -1,6 +1,5 @@
 var glob = require('glob')
 var path = require('path')
-var gulp = require('gulp')
 var rollup = require('rollup-stream')
 var source = require('vinyl-source-stream')
 var buffer = require('vinyl-buffer')
@@ -9,7 +8,7 @@ var sourcemaps = require('gulp-sourcemaps')
 var nodeResolve = require('rollup-plugin-node-resolve')
 var commonjs = require('rollup-plugin-commonjs')
 
-module.exports = function(config) {
+module.exports = function(gulp, config) {
   gulp.task('js', function () {
     var promises = []
 

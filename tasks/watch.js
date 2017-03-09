@@ -1,9 +1,8 @@
-var gulp = require('gulp')
 var path = require('path')
 
 var browserSync = require('../utils/browsersync')
 
-module.exports = function(config) {
+module.exports = function(gulp, config) {
   gulp.task('watch', function () {
     gulp.watch(path.join(config.assetsPath, 'src/scss/**/*.scss'), ['sass', 'sass-lint'])
     gulp.watch(path.join(config.assetsPath, 'src/javascripts/**/*.js'), ['js', 'standardjs'])
