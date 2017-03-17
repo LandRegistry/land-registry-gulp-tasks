@@ -1,5 +1,5 @@
 {
-  "name": "landregistry-gulp-tasks",
+  "name": "land-registry-gulp-tasks",
   "version": "1.0.0",
   "description": "Collection of gulp tasks to be used by other projects.",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@192.168.249.38:common/gulp-tasks.git"
+    "url": "git@github.com:LandRegistry/land-registry-gulp-tasks.git"
   },
   "dependencies": {
     "autoprefixer": "^6.7.2",
