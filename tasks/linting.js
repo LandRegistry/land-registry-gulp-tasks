@@ -5,7 +5,7 @@ var sassLint = require('gulp-sass-lint')
 module.exports = function(gulp, config) {
   gulp.task('standardjs', function () {
     var jsFiles = [
-      path.join(config.assetsPath, '**/src/*.js'),
+      path.join(config.assetsPath, 'src/**/*.js'),
       '!' + path.join(config.assetsPath, 'javascripts/vendor/**'),
       'gulp/**/*.js'
     ]

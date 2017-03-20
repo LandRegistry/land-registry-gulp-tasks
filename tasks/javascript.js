@@ -1,16 +1,15 @@
 var glob = require('glob')
 var path = require('path')
-var rollup = require('rollup-stream')
+var browserify = require('browserify');
+var browserifyIncremental = require('browserify-incremental');
+var fs = require('fs')
+var eventStream = require('event-stream')
+var extend = require('extend')
 var source = require('vinyl-source-stream')
-var buffer = require('vinyl-buffer')
-var uglify = require('rollup-plugin-uglify')
-var sourcemaps = require('gulp-sourcemaps')
-var nodeResolve = require('rollup-plugin-node-resolve')
-var commonjs = require('rollup-plugin-commonjs')
+var rename = require('gulp-rename')
 
 module.exports = function(gulp, config) {
   gulp.task('js', function () {
-    var promises = []
 
     // Loop over all our entrypoints
     var entrypoints = glob.sync(path.join(config.assetsPath, 'src/javascripts/*.js'))
@@ -19,43 +18,42 @@ module.exports = function(gulp, config) {
       return
     }
 
-    entrypoints.forEach(function (entrypoint) {
-      var name = path.basename(entrypoint)
+    var tasks = entrypoints.map(function(entrypoint) {
 
-      promises.push(new Promise(function (resolve, reject) {
-        rollup({
-          entry: entrypoint,
-          sourceMap: true,
-          legacy: true,
-          moduleContext: config.moduleContext,
-          plugins: [
-            nodeResolve(),
-            commonjs({
-              include: 'node_modules/**'
-            }),
-            uglify({
-              compress: {
-                screw_ie8: false
-              },
-              mangle: {
-                screw_ie8: false
-              },
-              output: {
-                screw_ie8: false
-              }
-            })
-          ],
-          format: 'iife'
-        })
-        .pipe(source(name, path.join(config.assetsPath, 'src/javascripts')))
-        .pipe(buffer())                           // buffer the output. most gulp plugins, including gulp-sourcemaps, don't support streams.
-        .pipe(sourcemaps.init({loadMaps: true}))  // tell gulp-sourcemaps to load the inline sourcemap produced by rollup-stream.
-        .pipe(sourcemaps.write('.'))
+      var b;
+      var browserfyConfig = {
+        transform: [
+          require('hoganify')
+        ]
+      };
+
+      // If we're in production mode, turn off debug and enable uglification
+      // and use the vanilla browserify module
+      if(config.mode === 'production') {
+        b = function(additionalConfig) {
+          return browserify(extend(browserfyConfig, additionalConfig));
+        }
+      } else {
+        // Otherwise use debug mode
+        browserfyConfig.debug = true;
+
+        // And do incremental builds for speed
+        b = function(additionalConfig) {
+          return browserifyIncremental(extend(browserfyConfig, additionalConfig), {
+            cacheFile: '.tmp/browserify-incremental-' + path.basename(entrypoint) + '.json'
+          });
+        }
+      }
+
+      return b({entries: [entrypoint]})
+        .bundle()
+        .pipe(source(entrypoint))
+        .pipe(rename({
+          dirname: ''
+        }))
         .pipe(gulp.dest(path.join(config.assetsPath, 'dist/javascripts')))
-        .on('end', resolve)
-      }))
     })
 
-    return Promise.all(promises)
+    return eventStream.merge.apply(null, tasks);
   })
 }
