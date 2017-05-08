@@ -1,15 +1,13 @@
 var glob = require('glob')
 var path = require('path')
-var browserify = require('browserify');
-var browserifyIncremental = require('browserify-incremental');
-var fs = require('fs')
-var eventStream = require('event-stream')
-var extend = require('extend')
-var source = require('vinyl-source-stream')
-var rename = require('gulp-rename')
+var rollup = require('rollup')
+var uglify = require('rollup-plugin-uglify')
+var nodeResolve = require('rollup-plugin-node-resolve')
+var commonjs = require('rollup-plugin-commonjs')
 
 module.exports = function(gulp, config) {
   gulp.task('js', function () {
+    var promises = []
 
     // Loop over all our entrypoints
     var entrypoints = glob.sync(path.join(config.assetsPath, 'src/javascripts/*.js'))
@@ -18,42 +16,45 @@ module.exports = function(gulp, config) {
       return
     }
 
-    var tasks = entrypoints.map(function(entrypoint) {
+    entrypoints.forEach(function (entrypoint) {
+      var name = path.basename(entrypoint)
 
-      var b;
-      var browserfyConfig = {
-        transform: [
-          require('hoganify')
-        ]
-      };
+      promises.push(new Promise(function (resolve, reject) {
 
-      // If we're in production mode, turn off debug and enable uglification
-      // and use the vanilla browserify module
-      if(config.mode === 'production') {
-        b = function(additionalConfig) {
-          return browserify(extend(browserfyConfig, additionalConfig));
-        }
-      } else {
-        // Otherwise use debug mode
-        browserfyConfig.debug = true;
+        rollup.rollup({
+          moduleContext: config.moduleContext,
+          legacy: true,
+          entry: entrypoint,
+          plugins: [
+            nodeResolve(),
+            commonjs(),
+            uglify({
+              compress: {
+                screw_ie8: false
+              },
+              mangle: {
+                screw_ie8: false
+              },
+              output: {
+                screw_ie8: false
+              }
+            })
+          ],
+        })
+          .then(function (bundle) {
+            bundle.write({
+              format: 'iife',
+              moduleName: name,
+              dest: path.join(config.assetsPath, 'dist/javascripts', name),
+              sourceMap: true
+            });
+          })
+          .then(resolve)
+          .catch(reject)
 
-        // And do incremental builds for speed
-        b = function(additionalConfig) {
-          return browserifyIncremental(extend(browserfyConfig, additionalConfig), {
-            cacheFile: '.tmp/browserify-incremental-' + path.basename(entrypoint) + '.json'
-          });
-        }
-      }
-
-      return b({entries: [entrypoint]})
-        .bundle()
-        .pipe(source(entrypoint))
-        .pipe(rename({
-          dirname: ''
-        }))
-        .pipe(gulp.dest(path.join(config.assetsPath, 'dist/javascripts')))
+      }))
     })
 
-    return eventStream.merge.apply(null, tasks);
+    return Promise.all(promises)
   })
 }
