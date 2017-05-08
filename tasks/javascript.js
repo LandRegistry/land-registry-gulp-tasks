@@ -25,6 +25,13 @@ module.exports = function(gulp, config) {
           moduleContext: config.moduleContext,
           legacy: true,
           entry: entrypoint,
+          onwarn: function (warning) {
+            if ( warning.code === 'UNRESOLVED_IMPORT' ) return;
+
+            // Replace with next(warning) when warn handlers are chainable
+            // See https://github.com/rollup/rollup/issues/1245
+            console.log(warning.message)
+          },
           plugins: [
             nodeResolve(),
             commonjs(),
