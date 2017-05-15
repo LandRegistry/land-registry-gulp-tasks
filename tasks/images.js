@@ -1,6 +1,4 @@
-var gulp = require('gulp')
 var path = require('path')
-var config = require('../config')
 
 module.exports = function(gulp, config) {
   gulp.task('images', function () {
