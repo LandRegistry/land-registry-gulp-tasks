@@ -14,7 +14,8 @@ module.exports = function(gulp, config) {
     return gulp.src(jsFiles)
       .pipe(standard())
       .pipe(standard.reporter('default', {
-        breakOnError: false,
+        breakOnError: true,
+        breakOnWarning: true,
         quiet: true,
         showRuleNames: true
       }))
