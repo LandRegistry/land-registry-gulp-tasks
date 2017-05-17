@@ -7,6 +7,7 @@ module.exports = function(gulp, config) {
     var jsFiles = [
       '**/*.js',
       '!' + path.join(config.assetsPath, 'javascripts/vendor/**'),
+      '!' + path.join(config.assetsPath, 'dist/**'),
       '!node_modules/**'
     ]
 
@@ -21,8 +22,10 @@ module.exports = function(gulp, config) {
 
   gulp.task('sass-lint', function () {
     var sassFiles = [
-      path.join(config.assetsPath, 'src/scss/**/*.s+(a|c)ss'),
-      '!' + path.join(config.assetsPath, 'src/scss/vendor/**')
+      '**/*.s+(a|c)ss',
+      '!' + path.join(config.assetsPath, 'src/scss/vendor/**'),
+      '!' + path.join(config.assetsPath, 'dist/**'),
+      '!node_modules/**'
     ]
 
     return gulp.src(sassFiles)
