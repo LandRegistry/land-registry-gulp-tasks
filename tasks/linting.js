@@ -34,10 +34,15 @@ module.exports = function(gulp, config) {
         rules: {
           'property-sort-order': 0,
           'force-element-nesting': 0,
+          'force-attribute-nesting': 0,
           'no-color-literals': 0,
           'force-pseudo-nesting': 0,
           'shorthand-values': 0,
-          'mixins-before-declarations': 0
+          'mixins-before-declarations': 0,
+          'no-qualifying-elements': {
+            'allow-element-with-attribute': 0
+          },
+          'class-name-format': 0
         }
       }))
       .pipe(sassLint.format())
