@@ -1,8 +1,8 @@
 module.exports = function(gulp, config) {
   gulp.task('copy', [
-    'clean',
     'copyGov',
-    'jquery'
+    'jquery',
+    'images'
   ])
 
   gulp.task('build', [
