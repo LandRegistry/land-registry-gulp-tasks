@@ -1,25 +1,25 @@
 var path = require('path')
 
 module.exports = function(gulp, config) {
-  gulp.task('copyGovTemplate', ['clean'], function () {
+  gulp.task('copyGovTemplate', function () {
     return gulp
       .src('node_modules/govuk_template_jinja/views/layouts/**')
       .pipe(gulp.dest(path.join(config.applicationPath, 'templates/vendor')))
   })
 
-  gulp.task('copyGovTemplateAssets', ['clean'], function () {
+  gulp.task('copyGovTemplateAssets', function () {
     return gulp
       .src('node_modules/govuk_template_jinja/assets/**')
       .pipe(gulp.dest(path.join(config.assetsPath, '/dist')))
   })
 
-  gulp.task('copyGovToolkitImages', ['clean'], function () {
+  gulp.task('copyGovToolkitImages', function () {
     return gulp
       .src('node_modules/govuk_frontend_toolkit/images/**')
       .pipe(gulp.dest(path.join(config.assetsPath, 'dist/images')))
   })
 
-  gulp.task('copyGovElements', ['clean'], function () {
+  gulp.task('copyGovElements', function () {
     return gulp
       .src([
         'node_modules/govuk-elements-sass/public/sass/**',

@@ -6,7 +6,7 @@ var nodeResolve = require('rollup-plugin-node-resolve')
 var commonjs = require('rollup-plugin-commonjs')
 
 module.exports = function(gulp, config) {
-  gulp.task('jquery', ['clean'], function() {
+  gulp.task('jquery', function() {
     return gulp
       .src('node_modules/jquery/dist/jquery.min.*')
       .pipe(gulp.dest(path.join(config.assetsPath, 'dist/javascripts')))
