@@ -17,7 +17,7 @@ module.exports = function(gulp, config) {
     }
 
     return gulp
-      .src(path.join(patternLibraryPath, 'src/land-registry-elements/**/*.{gif,png,jpg,jpeg,svg}'))
-      .pipe(gulp.dest(path.join(config.assetsPath, 'dist/images/land-registry-elements')))
+      .src(path.join(patternLibraryPath, 'src/land_registry_elements/**/*.{gif,png,jpg,jpeg,svg}'))
+      .pipe(gulp.dest(path.join(config.assetsPath, 'dist/images/land_registry_elements')))
   })
 }
