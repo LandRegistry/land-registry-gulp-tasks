@@ -30,6 +30,9 @@ module.exports = function(gulp, config) {
         ]
       },
       open: false
+    },
+    function() {
+      console.log('Please note: The above Access URLs are *internal* to the docker container! To access them from outside the container, please see the port mapping in your app\'s docker-compose-fragment.yml')
     })
 
     console.log('Watching...')
