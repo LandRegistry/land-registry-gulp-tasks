@@ -1,4 +1,5 @@
 var path = require('path')
+var fs = require('fs')
 
 module.exports = function(gulp, config) {
   gulp.task('images', ['appImages', 'patternLibraryImages'])
@@ -10,9 +11,9 @@ module.exports = function(gulp, config) {
   })
 
   gulp.task('patternLibraryImages', function () {
-    try {
-      var patternLibraryPath = require.resolve('land-registry-elements')
-    } catch(e) {
+    if(fs.existsSync('node_modules/land-registry-elements')) {
+      var patternLibraryPath = 'node_modules/land-registry-elements'
+    } else {
       var patternLibraryPath = '.'
     }
 
