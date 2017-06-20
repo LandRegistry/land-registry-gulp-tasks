@@ -1,6 +1,6 @@
 {
   "name": "land-registry-gulp-tasks",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Collection of gulp tasks to be used by other projects.",
   "main": "index.js",
   "scripts": {
