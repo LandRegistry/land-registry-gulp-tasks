@@ -17,6 +17,7 @@ var config = {
   'sassIncludePaths': [           // Additional search paths for node-sass
     'node_modules/land-registry-elements/src'
   ],
+  'browsersyncPort': 3000,        // Port to run the browsersync proxy on (Defaults to 3000)
   'localhost': 'localhost:8080'   // URL pointing to the running application. This is used by browserSync to create a live-reload proxy
 }
 

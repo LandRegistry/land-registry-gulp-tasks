@@ -11,6 +11,7 @@ module.exports = function(gulp, config) {
     var unixEpoch = 'Thursday, 01 Jan 1970 00:00:00 GMT'
 
     browserSync.init({
+      port: config.browsersyncPort || 3000,
       proxy: {
         target: config.localhost,
         proxyReq: [
