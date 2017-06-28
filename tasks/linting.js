@@ -6,7 +6,7 @@ module.exports = function(gulp, config) {
   gulp.task('standardjs', function () {
     var jsFiles = [
       '**/*.js',
-      '!' + path.join(config.assetsPath, 'javascripts/vendor/**'),
+      '!' + path.join(config.assetsPath, 'src/javascripts/vendor/**'),
       '!' + path.join(config.assetsPath, 'dist/**'),
       '!node_modules/**'
     ]
