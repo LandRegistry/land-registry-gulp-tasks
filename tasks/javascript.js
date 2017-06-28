@@ -12,6 +12,12 @@ module.exports = function(gulp, config) {
       .pipe(gulp.dest(path.join(config.assetsPath, 'dist/javascripts')))
   })
 
+  gulp.task('js-vendor', function() {
+    return gulp
+      .src(path.join(config.assetsPath, 'src/javascripts/vendor/*'))
+      .pipe(gulp.dest(path.join(config.assetsPath, 'dist/javascripts/vendor')))
+  })
+
   gulp.task('js', function () {
     var promises = []
 

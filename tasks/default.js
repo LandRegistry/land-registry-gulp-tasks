@@ -7,7 +7,8 @@ module.exports = function(gulp, config) {
 
   gulp.task('build', [
     'sass',
-    'js'
+    'js',
+    'js-vendor'
   ])
 
   gulp.task('default', [
