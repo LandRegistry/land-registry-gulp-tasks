@@ -40,7 +40,11 @@ module.exports = function (gulp, config) {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 query: {
-                  presets: ['env']
+                  presets: ['env'],
+                  plugins: [
+                    'transform-es3-property-literals',
+                    'transform-es3-member-expression-literals'
+                  ]
                 }
               }
             ]
