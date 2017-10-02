@@ -45,6 +45,7 @@ module.exports = function (gulp, config) {
                       'env',
                       {
                         debug: true,
+                        useBuiltIns: 'usage',
                         loose: true // For IE8. See https://babeljs.io/docs/usage/caveats/#internet-explorer-getters-setters-8-and-below-
                       }
                     ]
