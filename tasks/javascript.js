@@ -40,9 +40,15 @@ module.exports = function (gulp, config) {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 query: {
-                  presets: ['env', {
-                    loose: true // For IE8. See https://babeljs.io/docs/usage/caveats/#internet-explorer-getters-setters-8-and-below-
-                  }],
+                  presets: [
+                    [
+                      'env',
+                      {
+                        debug: true,
+                        loose: true // For IE8. See https://babeljs.io/docs/usage/caveats/#internet-explorer-getters-setters-8-and-below-
+                      }
+                    ]
+                  ],
                   plugins: [
                     'transform-es3-property-literals',
                     'transform-es3-member-expression-literals'
