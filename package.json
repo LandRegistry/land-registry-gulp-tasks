@@ -14,7 +14,7 @@
     "autoprefixer": "^6.7.2",
     "babel-core": "^6.26.0",
     "babel-loader": "^6.4.1",
-    "babel-preset-env": "^2",
+    "babel-preset-env": "git+https://github.com/babel/babel-preset-env.git#v2.0.0-beta.2",
     "browser-sync": "^2.18.7",
     "cssnano": "^3.10.0",
     "eslint": "^3.15.0",
