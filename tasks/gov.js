@@ -10,13 +10,13 @@ module.exports = function(gulp, config) {
   gulp.task('copyGovTemplateAssets', function () {
     return gulp
       .src('node_modules/govuk_template_jinja/assets/**')
-      .pipe(gulp.dest(path.join(config.assetsPath, '/dist')))
+      .pipe(gulp.dest(config.destinationPath))
   })
 
   gulp.task('copyGovToolkitImages', function () {
     return gulp
       .src('node_modules/govuk_frontend_toolkit/images/**')
-      .pipe(gulp.dest(path.join(config.assetsPath, 'dist/images')))
+      .pipe(gulp.dest(path.join(config.destinationPath, 'images')))
   })
 
   gulp.task('copyGovElements', function () {
@@ -25,7 +25,7 @@ module.exports = function(gulp, config) {
         'node_modules/govuk-elements-sass/public/sass/**',
         'node_modules/govuk_frontend_toolkit/stylesheets/**'
       ])
-     .pipe(gulp.dest(path.join(config.assetsPath, 'src/scss/vendor/govuk-elements')))
+     .pipe(gulp.dest(path.join(config.sourcePath, 'scss/vendor/govuk-elements')))
   })
 
   gulp.task('copyGov', [

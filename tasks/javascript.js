@@ -6,20 +6,20 @@ module.exports = function (gulp, config) {
   gulp.task('jquery', function () {
     return gulp
       .src('node_modules/jquery/dist/jquery.min.*')
-      .pipe(gulp.dest(path.join(config.assetsPath, 'dist/javascripts')))
+      .pipe(gulp.dest(path.join(config.destinationPath, 'javascripts')))
   })
 
   gulp.task('js-vendor', function () {
     return gulp
-      .src(path.join(config.assetsPath, 'src/javascripts/vendor/*'))
-      .pipe(gulp.dest(path.join(config.assetsPath, 'dist/javascripts/vendor')))
+      .src(path.join(config.sourcePath, 'javascripts/vendor/*'))
+      .pipe(gulp.dest(path.join(config.destinationPath, 'javascripts/vendor')))
   })
 
   gulp.task('js', function () {
     var promises = []
 
     // Loop over all our entrypoints
-    var entrypoints = glob.sync(path.join(config.assetsPath, 'src/javascripts/*.js'))
+    var entrypoints = glob.sync(path.join(config.sourcePath, 'javascripts/*.js'))
 
     if (!entrypoints) {
       return
@@ -32,7 +32,7 @@ module.exports = function (gulp, config) {
         webpack({
           entry: path.resolve(entrypoint),
           output: {
-            filename: path.resolve(path.join(config.assetsPath, 'dist/javascripts', name))
+            filename: path.resolve(path.join(config.destinationPath, 'javascripts', name))
           },
           module: {
             loaders: [
@@ -44,7 +44,6 @@ module.exports = function (gulp, config) {
                     [
                       'env',
                       {
-                        debug: true,
                         loose: true // For IE8. See https://babeljs.io/docs/usage/caveats/#internet-explorer-getters-setters-8-and-below-
                       }
                     ]

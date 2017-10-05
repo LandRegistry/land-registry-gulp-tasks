@@ -4,8 +4,8 @@ var browserSync = require('../utils/browsersync')
 
 module.exports = function(gulp, config) {
   gulp.task('watch', function () {
-    gulp.watch(path.join(config.assetsPath, 'src/scss/**/*.scss'), ['sass', 'sass-lint'])
-    gulp.watch(path.join(config.assetsPath, 'src/javascripts/**/*.js'), ['js', 'standardjs'])
+    gulp.watch(path.join(config.sourcePath, 'scss/**/*.scss'), ['sass', 'sass-lint'])
+    gulp.watch(path.join(config.sourcePath, 'javascripts/**/*.js'), ['js', 'standardjs'])
     gulp.watch('gulp/**/*.js', ['standardjs'])
 
     var unixEpoch = 'Thursday, 01 Jan 1970 00:00:00 GMT'

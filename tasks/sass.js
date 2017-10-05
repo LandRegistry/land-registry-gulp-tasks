@@ -15,7 +15,7 @@ module.exports = function(gulp, config) {
     includePaths: config.sassIncludePaths ? config.sassIncludePaths : []
   }
 
-    return gulp.src(path.join(config.assetsPath, config.sassPath))
+    return gulp.src(path.join(config.sourcePath, config.sassPath))
       .pipe(sourcemaps.init())
       .pipe(sass(sassOptions).on('error', sass.logError))
       .pipe(postcss([
@@ -23,7 +23,7 @@ module.exports = function(gulp, config) {
         cssnano()
       ]))
       .pipe(sourcemaps.write('.'))
-      .pipe(gulp.dest(path.join(config.assetsPath, 'dist/stylesheets')))
+      .pipe(gulp.dest(path.join(config.destinationPath, 'stylesheets')))
       .pipe(browserSync.stream())
   })
 }
