@@ -1,6 +1,6 @@
 var path = require('path')
 
-module.exports = function(gulp, config) {
+module.exports = function (gulp, config) {
   gulp.task('copyGovTemplate', function () {
     return gulp
       .src('node_modules/govuk_template_jinja/views/layouts/**')

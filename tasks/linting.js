@@ -2,7 +2,7 @@ var path = require('path')
 var standard = require('gulp-standard')
 var sassLint = require('gulp-sass-lint')
 
-module.exports = function(gulp, config) {
+module.exports = function (gulp, config) {
   gulp.task('standardjs', function () {
     var jsFiles = [
       '**/*.js',

@@ -1,7 +1,7 @@
 var del = require('del')
 var path = require('path')
 
-module.exports = function(gulp, config) {
+module.exports = function (gulp, config) {
   gulp.task('clean', ['cleanDist', 'cleanGov'])
 
   gulp.task('cleanDist', function () {
