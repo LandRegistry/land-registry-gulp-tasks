@@ -12,22 +12,15 @@ var path = require('path')
 
 var config = {
   'applicationPath': './app',     // Path on disk to the main application folder
-  'assetsPath': 'assets',         // Path within applicationPath where the assets are located
-  'sassPath': 'src/scss/*.scss',  // Path within assetsPath where the *source* assets are located
+  'sourcePath': './app/assets/src',         // Path where the assets are located
+  'destinationPath': './app/assets/dist',         // Path where the built assets should be written
+  'sassPath': 'scss/*.scss',  // Path to the sass within the sourcePath
   'sassIncludePaths': [           // Additional search paths for node-sass
     'node_modules/land-registry-elements/src'
   ],
   'browsersyncPort': 3000,        // Port to run the browsersync proxy on (Defaults to 3000)
   'localhost': 'localhost:8080'   // URL pointing to the running application. This is used by browserSync to create a live-reload proxy
 }
-
-config.assetsPath = path.join(config.applicationPath, config.assetsPath)
-
-// Set up context for each module
-// Commonly used for modules that expect "this" to resolve to the window object
-// In ES6 modules, using "this" at the top level always resolves to undefined
-// hence the need to override it here
-config.moduleContext = {}
 
 // Register all the gulp tasks provided by the land registry module
 // If you don't want to do this, you could opt not to register some of the tasks
