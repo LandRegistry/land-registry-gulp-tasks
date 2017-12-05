@@ -58,15 +58,7 @@ module.exports = function (gulp, config) {
                 }
               }
             ]
-          },
-          plugins: [
-            new webpack.optimize.UglifyJsPlugin({
-              screw_ie8: false,
-              output: {
-                keep_quoted_props: true // Required for IE8 in situations such as where an object property uses a reserved word like catch
-              }
-            })
-          ]
+          }
         },
         function (err, stats) {
           if (err) {
