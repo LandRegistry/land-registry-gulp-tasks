@@ -11,6 +11,8 @@ module.exports = function (gulp, config) {
       '!node_modules/**'
     ]
 
+    jsFiles = jsFiles.concat(config.lintingPaths)
+
     return gulp.src(jsFiles)
       .pipe(standard())
       .pipe(standard.reporter('default', {
@@ -28,6 +30,8 @@ module.exports = function (gulp, config) {
       '!' + path.join(config.destinationPath, '**'),
       '!node_modules/**'
     ]
+
+    sassFiles = sassFiles.concat(config.lintingPaths)
 
     return gulp.src(sassFiles)
       .pipe(sassLint({
