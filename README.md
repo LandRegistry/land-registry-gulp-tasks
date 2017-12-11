@@ -19,7 +19,12 @@ var config = {
     'node_modules/land-registry-elements/src'
   ],
   'browsersyncPort': 3000,        // Port to run the browsersync proxy on (Defaults to 3000)
-  'localhost': 'localhost:8080'   // URL pointing to the running application. This is used by browserSync to create a live-reload proxy
+  'localhost': 'localhost:8080'   // URL pointing to the running application. This is used by browserSync to create a live-reload proxy,
+  'lintingPaths': [
+    // Array of path glob patterns to add to the linting
+    // Most useful for *ignoring* certain paths by prefixing with an !
+    // For example !bin/**
+  ]
 }
 
 // Register all the gulp tasks provided by the land registry module
