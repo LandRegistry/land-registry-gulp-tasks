@@ -1,4 +1,4 @@
-module.exports = function(gulp, config) {
+module.exports = function (gulp, config) {
   gulp.task('copy', [
     'copyGov',
     'jquery',

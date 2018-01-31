@@ -3,11 +3,12 @@ var path = require('path')
 var webpack = require('webpack')
 var uglify = require('gulp-uglify')
 var rename = require('gulp-rename')
+var fs = require('fs')
 
 module.exports = function (gulp, config) {
   gulp.task('jquery', function () {
     return gulp
-      .src('node_modules/jquery/dist/jquery.min.*')
+      .src(require.resolve('jquery/dist/jquery.min.js'))
       .pipe(gulp.dest(path.join(config.destinationPath, 'javascripts')))
   })
 
@@ -33,6 +34,13 @@ module.exports = function (gulp, config) {
 
       promises.push(new Promise(function (resolve, reject) {
         webpack({
+          bail: true,
+          resolve: {
+            root: ['node_modules', process.env.NODE_PATH]
+          },
+          resolveLoader: {
+            root: ['node_modules', process.env.NODE_PATH]
+          },
           entry: path.resolve(entrypoint),
           output: {
             filename: outputFilename

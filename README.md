@@ -7,7 +7,6 @@ These Gulp tasks are designed primarily to be used by those consuming GOV.UK and
 ```
 var gulp = require('gulp')
 var landRegistryGulpTasks = require('land-registry-gulp-tasks')
-
 var path = require('path')
 
 var config = {
@@ -16,7 +15,7 @@ var config = {
   'destinationPath': './app/assets/dist',         // Path where the built assets should be written
   'sassPath': 'scss/*.scss',  // Path to the sass within the sourcePath
   'sassIncludePaths': [           // Additional search paths for node-sass
-    'node_modules/land-registry-elements/src'
+    path.join(path.dirname(require.resolve('land-registry-elements/README.md')), 'src')
   ],
   'browsersyncPort': 3000,        // Port to run the browsersync proxy on (Defaults to 3000)
   'localhost': 'localhost:8080'   // URL pointing to the running application. This is used by browserSync to create a live-reload proxy,

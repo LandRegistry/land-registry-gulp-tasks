@@ -11,10 +11,8 @@ module.exports = function (gulp, config) {
   })
 
   gulp.task('patternLibraryImages', function () {
-    var patternLibraryPath
-    if (fs.existsSync('node_modules/land-registry-elements')) {
-      patternLibraryPath = 'node_modules/land-registry-elements'
-    } else {
+    var patternLibraryPath = path.dirname(require.resolve('land-registry-elements/README.md'))
+    if (!fs.existsSync(patternLibraryPath)) {
       patternLibraryPath = '.'
     }
 
