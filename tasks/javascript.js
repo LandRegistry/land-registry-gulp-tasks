@@ -19,72 +19,68 @@ module.exports = function (gulp, config) {
   })
 
   gulp.task('js', function () {
-    var promises = []
-
     // Loop over all our entrypoints
-    var entrypoints = glob.sync(path.join(config.sourcePath, 'javascripts/*.js'))
+    var files = glob.sync(path.join(config.sourcePath, 'javascripts/*.js'))
 
-    if (!entrypoints) {
+    if (!files) {
       return
     }
 
-    entrypoints.forEach(function (entrypoint) {
-      var name = path.basename(entrypoint)
-      var outputFilename = path.resolve(path.join(config.destinationPath, 'javascripts', name))
+    var entrypoints = files.reduce(function (accumlator, value) {
+      var inputPath = path.resolve(value)
+      var name = path.basename(value, '.js')
+      accumlator[name] = inputPath
+      accumlator[name + '.min'] = inputPath
+      return accumlator
+    }, {})
 
-      promises.push(new Promise(function (resolve, reject) {
-        webpack({
-          bail: true,
-          resolve: {
-            root: ['node_modules', process.env.NODE_PATH]
-          },
-          resolveLoader: {
-            root: ['node_modules', process.env.NODE_PATH]
-          },
-          entry: path.resolve(entrypoint),
-          output: {
-            filename: outputFilename
-          },
-          module: {
-            loaders: [
-              {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                query: {
-                  presets: [
-                    [
-                      'env',
-                      {
-                        loose: true // For IE8. See https://babeljs.io/docs/usage/caveats/#internet-explorer-getters-setters-8-and-below-
-                      }
-                    ]
-                  ],
-                  plugins: [
-                    'transform-es3-property-literals',
-                    'transform-es3-member-expression-literals'
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        function (err, stats) {
-          if (err) {
-            return reject(err)
-          }
-          resolve(outputFilename)
+    webpack({
+      bail: true,
+      devtool: 'source-map',
+      resolve: {
+        root: ['node_modules', process.env.NODE_PATH]
+      },
+      resolveLoader: {
+        root: ['node_modules', process.env.NODE_PATH]
+      },
+      entry: entrypoints,
+      output: {
+        path: path.resolve(path.join(config.destinationPath, 'javascripts')),
+        filename: '[name].js'
+      },
+      plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+          include: /\.min\.js$/
         })
-      }))
+      ],
+      module: {
+        loaders: [
+          {
+            test: /\.js$/,
+            loader: 'babel-loader',
+            query: {
+              presets: [
+                [
+                  'env',
+                  {
+                    loose: true // For IE8. See https://babeljs.io/docs/usage/caveats/#internet-explorer-getters-setters-8-and-below-
+                  }
+                ]
+              ],
+              plugins: [
+                'transform-es3-property-literals',
+                'transform-es3-member-expression-literals'
+              ]
+            }
+          }
+        ]
+      }
+    },
+    function (err, stats) {
+      console.log(err)
+      if (err) {
+        console.error(err)
+      }
     })
-
-    // Uglify used directly rather than as part of webpack so that we can generate minified files as well as keeping the originals
-    var minify = function (outputs) {
-      return gulp.src(outputs)
-        .pipe(uglify())
-        .pipe(rename({ suffix: '.min' }))
-        .pipe(gulp.dest(path.join(config.destinationPath, 'javascripts')))
-    }
-
-    return Promise.all(promises).then(minify)
   })
 }
