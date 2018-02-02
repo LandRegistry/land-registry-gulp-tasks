@@ -77,7 +77,6 @@ module.exports = function (gulp, config) {
       }
     },
     function (err, stats) {
-      console.log(err)
       if (err) {
         console.error(err)
       }
