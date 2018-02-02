@@ -1,9 +1,6 @@
 var glob = require('glob')
 var path = require('path')
 var webpack = require('webpack')
-var uglify = require('gulp-uglify')
-var rename = require('gulp-rename')
-var fs = require('fs')
 
 module.exports = function (gulp, config) {
   gulp.task('jquery', function () {
