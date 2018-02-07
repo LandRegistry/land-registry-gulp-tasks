@@ -35,10 +35,10 @@ module.exports = function (gulp, config) {
       bail: true,
       devtool: 'source-map',
       resolve: {
-        root: ['node_modules', process.env.NODE_PATH]
+        fallback: process.env.NODE_PATH
       },
       resolveLoader: {
-        root: ['node_modules', process.env.NODE_PATH]
+        fallback: process.env.NODE_PATH
       },
       entry: entrypoints,
       output: {
