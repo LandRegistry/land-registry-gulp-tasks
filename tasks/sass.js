@@ -5,8 +5,6 @@ var postcss = require('gulp-postcss')
 var cssnano = require('cssnano')
 var autoprefixer = require('autoprefixer')
 
-var browserSync = require('../utils/browsersync')
-
 module.exports = function (gulp, config) {
   gulp.task('sass', function () {
     var sassOptions = {
@@ -23,6 +21,5 @@ module.exports = function (gulp, config) {
       ]))
       .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest(path.join(config.destinationPath, 'stylesheets')))
-      .pipe(browserSync.stream())
   })
 }
