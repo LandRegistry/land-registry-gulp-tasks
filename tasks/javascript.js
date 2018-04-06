@@ -23,60 +23,64 @@ module.exports = function (gulp, config) {
       return
     }
 
-    var entrypoints = files.reduce(function (accumlator, value) {
-      var inputPath = path.resolve(value)
-      var name = path.basename(value, '.js')
-      accumlator[name] = inputPath
-      accumlator[name + '.min'] = inputPath
-      return accumlator
-    }, {})
+    return new Promise(function (resolve, reject) {
+      var entrypoints = files.reduce(function (accumlator, value) {
+        var inputPath = path.resolve(value)
+        var name = path.basename(value, '.js')
+        accumlator[name] = inputPath
+        accumlator[name + '.min'] = inputPath
+        return accumlator
+      }, {})
 
-    webpack({
-      bail: true,
-      devtool: 'source-map',
-      resolve: {
-        fallback: process.env.NODE_PATH
-      },
-      resolveLoader: {
-        fallback: process.env.NODE_PATH
-      },
-      entry: entrypoints,
-      output: {
-        path: path.resolve(path.join(config.destinationPath, 'javascripts')),
-        filename: '[name].js'
-      },
-      plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-          include: /\.min\.js$/
-        })
-      ],
-      module: {
-        loaders: [
-          {
-            test: /\.js$/,
-            loader: 'babel-loader',
-            query: {
-              presets: [
-                [
-                  'env',
-                  {
-                    loose: true // For IE8. See https://babeljs.io/docs/usage/caveats/#internet-explorer-getters-setters-8-and-below-
-                  }
+      webpack({
+        bail: true,
+        devtool: 'source-map',
+        resolve: {
+          fallback: process.env.NODE_PATH
+        },
+        resolveLoader: {
+          fallback: process.env.NODE_PATH
+        },
+        entry: entrypoints,
+        output: {
+          path: path.resolve(path.join(config.destinationPath, 'javascripts')),
+          filename: '[name].js'
+        },
+        plugins: [
+          new webpack.optimize.UglifyJsPlugin({
+            include: /\.min\.js$/
+          })
+        ],
+        module: {
+          loaders: [
+            {
+              test: /\.js$/,
+              loader: 'babel-loader',
+              query: {
+                presets: [
+                  [
+                    'env',
+                    {
+                      loose: true // For IE8. See https://babeljs.io/docs/usage/caveats/#internet-explorer-getters-setters-8-and-below-
+                    }
+                  ]
+                ],
+                plugins: [
+                  'transform-es3-property-literals',
+                  'transform-es3-member-expression-literals'
                 ]
-              ],
-              plugins: [
-                'transform-es3-property-literals',
-                'transform-es3-member-expression-literals'
-              ]
+              }
             }
-          }
-        ]
-      }
-    },
-    function (err, stats) {
-      if (err) {
-        console.error(err)
-      }
+          ]
+        }
+      },
+      function (err, stats) {
+        resolve('Webpack finished')
+
+        if (err) {
+          reject(err)
+        }
+      })
     })
   })
 }
