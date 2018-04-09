@@ -67,7 +67,8 @@ module.exports = function (gulp, config) {
                 ],
                 plugins: [
                   'transform-es3-property-literals',
-                  'transform-es3-member-expression-literals'
+                  'transform-es3-member-expression-literals',
+                  'transform-regenerator'
                 ]
               }
             }
