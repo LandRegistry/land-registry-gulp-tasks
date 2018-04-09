@@ -75,11 +75,11 @@ module.exports = function (gulp, config) {
         }
       },
       function (err, stats) {
-        resolve('Webpack finished')
-
         if (err) {
           reject(err)
         }
+
+        resolve('Webpack finished')
       })
     })
   })
