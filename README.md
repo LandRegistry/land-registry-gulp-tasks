@@ -1,5 +1,10 @@
 # land-registry-gulp-tasks
 
+> **This repository is deprecated. Tasks have been moved back under the direct control of apps and the new structure can be seen in flask-skeleton-ui**
+
+<details>
+  <summary>View the readme anyway</summary>
+
 These Gulp tasks are designed primarily to be used by those consuming GOV.UK and [land-registry-elements](https://github.com/LandRegistry/land-registry-elements) assets. However the bits of code specific to these are relatively innocuous and so these Gulp tasks could be used by non GOV.UK apps as well.
 
 ## Example Gulp file
@@ -47,3 +52,4 @@ gulp.task('watch', function () {
 })
 
 ```
+</details>
